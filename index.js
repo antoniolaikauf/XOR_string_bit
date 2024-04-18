@@ -1,5 +1,6 @@
 let successivo=0
-
+let risultato = "";
+ let divisione = [];
 let testi = [
     {
       testo_bit: "",
@@ -51,11 +52,11 @@ let testi = [
       testo:
         "466d06ece998b7a2fb1d464fed2ced7641ddaa3cc31c9941cf110abbf409ed39598005b3399ccfafb61d0315fca0a314be138a9f32503bedac8067f03adbf3575c3b8edc9ba7f537530541ab0f9f3cd04ff50d66f1d559ba520e89a2cb2a83",
     },
-    {
-      testo_bit: "",
-      testo:
-        "32510ba9babebbbefd001547a810e67149caee11d945cd7fc81a05e9f85aac650e9052ba6a8cd8257bf14d13e6f0a803b54fde9e77472dbff89d71b57bddef121336cb85ccb8f3315f4b52e301d16e9f52f904",
-    },
+    // {
+    //   testo_bit: "",
+    //   testo:
+    //     "32510ba9babebbbefd001547a810e67149caee11d945cd7fc81a05e9f85aac650e9052ba6a8cd8257bf14d13e6f0a803b54fde9e77472dbff89d71b57bddef121336cb85ccb8f3315f4b52e301d16e9f52f904",
+    // },
   ];
   for (let i = 0; i < testi.length; i++) {
     let testobi = BigInt("0x" + testi[i].testo);
@@ -69,22 +70,18 @@ let testi = [
       }
     while (testi[i].testo_bit.length < testi[i + 1].testo_bit.length) {
         testi[i].testo_bit += "0";  
-    }
+      }
+      for (let j = 0; j < testi[i].testo_bit.length; j++) {
+          
+            if (testi[i].testo_bit[j] === testi[i+1].testo_bit[j]) {
+              risultato += 0;
+            } else {
+              risultato += 1;
+            }
+            if (j % 8 == 0) {
+              divisione.push(risultato.substring(j - 8, j));
+            }
+      }
 }
-
-//   let risultato = "";
-//   let contatore = 0;
-//   let divisione = [];
-//   for (let i = 0; i < testi[i].testo_bit.length; i++) {
-//     if (testi[i].testo_bit[i] === testi[successivo+1].testo_bit[i]) {
-//       risultato += 0;
-//     } else {
-//       risultato += 1;
-//     }
-//     if (i % 8 == 0) {
-//       divisione.push(risultato.substring(i - 8, i));
-//     }
-//   }
-//   console.log(testi[1].testo_bit);
-//   console.log(testi[0].testo_bit);
-//   console.log(divisione.slice(1));
+console.log(divisione.slice(1));
+  
