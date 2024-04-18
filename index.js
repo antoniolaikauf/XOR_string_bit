@@ -73,24 +73,25 @@ for (let i = 0; i < testi.length - 2; i+=2) {
     }
     while (testi[i].testo_bit.length < testi[i + 2].testo_bit.length) {
         testi[i].testo_bit += "0";  
-      }
+    }
       for (let j = 0; j <= testi[i].testo_bit.length; j++) {
-          
-            if (testi[i].testo_bit[j] === testi[i+2].testo_bit[j]) {
+        //   xor tra coppie di elementi 
+        if (testi[i].testo_bit[j] === testi[i+2].testo_bit[j]) {
               risultato += 0;
-            } else {
+        } else {
               risultato += 1;
-          }
+        }
         // qua si attiava quando è a 7 essendo che j inizia da 0 e non da 1 
-          if ((j+1) % 8 == 0) {
+        if ((j+1) % 8 == 0) {
               elemento += risultato.substring(j - 7, j+1)
-            }
-          if (j == testi[i].testo_bit.length) {
-          divisione.push({
-          indice:`${i} + ${i+2}` , result:elemento
-              });
-          }
-      }
+        }
+        //   si mette nell'array quandoj raggiunge la lunghezza della stringa 
+        if (j == testi[i].testo_bit.length) {
+            divisione.push({
+                indice:`${i} + ${i+2}` , result:elemento
+            });
+        }
+    }
 }
 console.log(divisione);
 
