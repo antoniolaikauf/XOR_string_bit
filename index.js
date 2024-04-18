@@ -1,7 +1,4 @@
-let successivo=0
-let risultato = "";
 let divisione = [];
-elemento = '';
 let testi = [
     {
       testo_bit: "",
@@ -66,17 +63,19 @@ let testi = [
   }
 
 
-for (let i = 0; i < testi.length - 2; i+=2) { 
+for (let i = 0; i < testi.length - 1; i+=2) { 
+    let risultato = "";
+    let elemento = '';
     //   aggiunto 0 fino a che le due stringhe di bit non hanno la stessa lunghezza 
-    while (testi[i].testo_bit.length > testi[i + 2].testo_bit.length) {
-        testi[i + 2].testo_bit += "0";  
+    while (testi[i].testo_bit.length > testi[i + 1].testo_bit.length) {
+        testi[i + 1].testo_bit += "0";  
     }
-    while (testi[i].testo_bit.length < testi[i + 2].testo_bit.length) {
+    while (testi[i].testo_bit.length < testi[i + 1].testo_bit.length) {
         testi[i].testo_bit += "0";  
     }
-      for (let j = 0; j <= testi[i].testo_bit.length; j++) {
+    for (let j = 0; j <= testi[i].testo_bit.length; j++) {
         //   xor tra coppie di elementi 
-        if (testi[i].testo_bit[j] === testi[i+2].testo_bit[j]) {
+        if (testi[i].testo_bit[j] === testi[i+1].testo_bit[j]) {
               risultato += 0;
         } else {
               risultato += 1;
@@ -86,9 +85,9 @@ for (let i = 0; i < testi.length - 2; i+=2) {
               elemento += risultato.substring(j - 7, j+1)
         }
         //   si mette nell'array quandoj raggiunge la lunghezza della stringa 
-        if (j == testi[i].testo_bit.length) {
+        if (j == testi[i+1].testo_bit.length) {
             divisione.push({
-                indice:`${i} + ${i+2}` , result:elemento
+                indice:`${i} + ${i+1}` , result:elemento
             });
         }
     }
