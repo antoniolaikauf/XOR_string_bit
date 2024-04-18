@@ -1,4 +1,4 @@
-let divisione = [];
+let Array_XOR = [];
 let testi = [
     {
       testo_bit: "",
@@ -64,8 +64,8 @@ let testi = [
 
 
 for (let i = 0; i < testi.length - 1; i+=2) { 
-    let risultato = "";
-    let elemento = '';
+    let value_Xorata = "";
+    let Bit_element = '';
     //   aggiunto 0 fino a che le due stringhe di bit non hanno la stessa lunghezza 
     while (testi[i].testo_bit.length > testi[i + 1].testo_bit.length) {
         testi[i + 1].testo_bit += "0";  
@@ -76,23 +76,23 @@ for (let i = 0; i < testi.length - 1; i+=2) {
     for (let j = 0; j <= testi[i].testo_bit.length; j++) {
         //   xor tra coppie di elementi 
         if (testi[i].testo_bit[j] === testi[i+1].testo_bit[j]) {
-              risultato += 0;
+              value_Xorata += 0;
         } else {
-              risultato += 1;
+              value_Xorata += 1;
         }
         // qua si attiava quando è a 7 essendo che j inizia da 0 e non da 1 
         if ((j+1) % 8 == 0) {
-              elemento += risultato.substring(j - 7, j+1)
+              Bit_element += value_Xorata.substring(j - 7, j+1)
         }
         //   si mette nell'array quandoj raggiunge la lunghezza della stringa 
         if (j == testi[i+1].testo_bit.length) {
-            divisione.push({
-                indice:`${i} + ${i+1}` , result:elemento
+            Array_XOR.push({
+                Index:`primo indice ${i} + secondo indice ${i+1}` , Value:Bit_element
             });
         }
     }
 }
-console.log(divisione);
+console.log(Array_XOR);
 
 
   
