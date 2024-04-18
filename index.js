@@ -1,6 +1,7 @@
 let successivo=0
 let risultato = "";
- let divisione = [];
+let divisione = [];
+elemento = '';
 let testi = [
     {
       testo_bit: "",
@@ -57,31 +58,41 @@ let testi = [
     //   testo:
     //     "32510ba9babebbbefd001547a810e67149caee11d945cd7fc81a05e9f85aac650e9052ba6a8cd8257bf14d13e6f0a803b54fde9e77472dbff89d71b57bddef121336cb85ccb8f3315f4b52e301d16e9f52f904",
     // },
-  ];
+];
+//   ottenuto bit da testo cifrato 
   for (let i = 0; i < testi.length; i++) {
     let testobi = BigInt("0x" + testi[i].testo);
     testi[i].testo_bit = testobi.toString(2);
   }
 
 
-  for (let i = 0; i < testi.length - 1; i++) { 
-    while (testi[i].testo_bit.length > testi[i + 1].testo_bit.length) {
-        testi[i + 1].testo_bit += "0";  
-      }
-    while (testi[i].testo_bit.length < testi[i + 1].testo_bit.length) {
+for (let i = 0; i < testi.length - 2; i+=2) { 
+    //   aggiunto 0 fino a che le due stringhe di bit non hanno la stessa lunghezza 
+    while (testi[i].testo_bit.length > testi[i + 2].testo_bit.length) {
+        testi[i + 2].testo_bit += "0";  
+    }
+    while (testi[i].testo_bit.length < testi[i + 2].testo_bit.length) {
         testi[i].testo_bit += "0";  
       }
-      for (let j = 0; j < testi[i].testo_bit.length; j++) {
+      for (let j = 0; j <= testi[i].testo_bit.length; j++) {
           
-            if (testi[i].testo_bit[j] === testi[i+1].testo_bit[j]) {
+            if (testi[i].testo_bit[j] === testi[i+2].testo_bit[j]) {
               risultato += 0;
             } else {
               risultato += 1;
+          }
+        // qua si attiava quando è a 7 essendo che j inizia da 0 e non da 1 
+          if ((j+1) % 8 == 0) {
+              elemento += risultato.substring(j - 7, j+1)
             }
-            if (j % 8 == 0) {
-              divisione.push(risultato.substring(j - 8, j));
-            }
+          if (j == testi[i].testo_bit.length) {
+          divisione.push({
+          indice:`${i} + ${i+2}` , result:elemento
+              });
+          }
       }
 }
-console.log(divisione.slice(1));
+console.log(divisione);
+
+
   
