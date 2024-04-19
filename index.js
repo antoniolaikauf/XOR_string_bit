@@ -97,24 +97,61 @@ for (let i = 0; i < testi.length - 1; i+=2) {
 // console.log(testi[0].testo_bit);
 // console.log(testi[1].testo_bit);
 // console.log(Array_XOR[0].Value);
+
+
+var CipherTextxsCBC = [
+  {
+  C :'4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81',
+  },
+  {
+  C :'5b68629feb8606f9a6667670b75b38a5b4832d0f26e1ab7da33249de7d4afc48e713ac646ace36e872ad5fb8a512428a6e21364b0c374df45503473c5242a253',
+  },
+]
+
+var keyCBC = CryptoJS.enc.Hex.parse("140b41b22a29beb4061bda66b6747e14");
+
+for (let i = 0; i < CipherTextxsCBC.length; i++) {
+  var ivCBC =CipherTextxsCBC[i].C.substring(0, 32);
+  ivCBC = CryptoJS.enc.Hex.parse(ivCBC);
+  var encryptedCBC = CipherTextxsCBC[i].C.substring(32);
+  // il testo cifrato viene convertito in modo tale che si possa usare nel algoritmo D 
+  // quindi viene passato in modo tale che sia un arrayword
+  var cipherParams = CryptoJS.lib.CipherParams.create({
+    ciphertext: CryptoJS.enc.Hex.parse(encryptedCBC)
+  });
+  var decrypted = CryptoJS.AES.decrypt(cipherParams, keyCBC, {
+    iv: ivCBC,
+    // mette gai di base questa modalità quindi si potrebbe eliminare 
+      mode: CryptoJS.mode.CBC,
+  });
+  console.log(decrypted.toString(CryptoJS.enc.Utf8));  
+}
+
+
+var CipherTextxsCTR = [
+  {
+  C :'69dda8455c7dd4254bf353b773304eec0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329',
+  },
+  {
+  C :'770b80259ec33beb2561358a9f2dc617e46218c0a53cbeca695ae45faa8952aa0e311bde9d4e01726d3184c34451',
+  },
+]
+
+var keyCTR = CryptoJS.enc.Hex.parse('36f18357be4dbd77f050515c73fcf9f2')
+
+for (let i = 0; i < CipherTextxsCTR.length; i++) {
+
+  var ivCTR = CipherTextxsCTR[i].C.substring(0, 32)
+  ivCTR = CryptoJS.enc.Hex.parse(ivCTR)
+  var encryptedCTR = CipherTextxsCTR[i].C.substring(32)
+  var cipherParams = CryptoJS.lib.CipherParams.create({
+    ciphertext:CryptoJS.enc.Hex.parse(encryptedCTR)
+  })
+  var decryptCTR = CryptoJS.AES.decrypt(cipherParams, keyCTR, {
+    iv: ivCTR,
+    padding: CryptoJS.pad.NoPadding,
+    mode: CryptoJS.mode.CTR,
+  })
   
-var C = '4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81';
-
-var key = CryptoJS.enc.Hex.parse("140b41b22a29beb4061bda66b6747e14");
-
-var iv = C.substring(0, 32);
-iv = CryptoJS.enc.Hex.parse(iv);
-
-var encrypted = C.substring(32);
-// il testo cifrato viene convertito in modo tale che si possa usare nel algoritmo D 
-// quindi viene passato in modo tale che sia un arrayword
-var cipherParams = CryptoJS.lib.CipherParams.create({
-    ciphertext: CryptoJS.enc.Hex.parse(encrypted)
-});
-var decrypted = CryptoJS.AES.decrypt(cipherParams, key, {
-  iv: iv,
-  // mette gai di base questa modalità quindi si potrebbe eliminare 
-    mode: CryptoJS.mode.CBC,
-});
-
-console.log(decrypted.toString(CryptoJS.enc.Utf8)); 
+  console.log(decryptCTR.toString(CryptoJS.enc.Utf8));
+}
