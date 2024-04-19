@@ -92,7 +92,49 @@ for (let i = 0; i < testi.length - 1; i+=2) {
         }
     }
 }
-console.log(Array_XOR);
 
 
+// console.log(testi[0].testo_bit);
+// console.log(testi[1].testo_bit);
+// console.log(Array_XOR[0].Value);
+
+
+
+
+var key ='140b41b22a29beb4061bda66b6747e14'
+
+var C = '4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81'
+
+var key = CryptoJS.enc.Hex.parse("140b41b22a29beb4061bda66b6747e14");
+console.log(key);
+var iv_dec = C.substring(0, 32)
+iv_dec = CryptoJS.enc.Hex.parse(iv_dec);
+// console.log(iv);
+
+var testo_cifrato=C.substring(32)
+console.log(testo_cifrato);
+
+var testo_cifrato = CryptoJS.AES.decrypt(testo_cifrato, key, {
+  iv:iv_dec,
+  mode: CryptoJS.mode.CBC,
+})
   
+var C = '4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81';
+
+var key = CryptoJS.enc.Hex.parse("140b41b22a29beb4061bda66b6747e14");
+
+var iv = C.substring(0, 32);
+iv = CryptoJS.enc.Hex.parse(iv);
+
+var encrypted = C.substring(32);
+var cipherParams = CryptoJS.lib.CipherParams.create({
+    ciphertext: CryptoJS.enc.Hex.parse(encrypted)
+});
+
+var decrypted = CryptoJS.AES.decrypt(cipherParams, key, {
+  iv: iv,
+  // mette gai di base questa modalità
+    mode: CryptoJS.mode.CBC,
+});
+
+console.log(decrypted.toString(CryptoJS.enc.Utf8)); 
