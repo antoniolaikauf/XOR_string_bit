@@ -127,7 +127,7 @@ for (let i = 0; i < CipherTextxsCBC.length; i++) {
   console.log(decrypted.toString(CryptoJS.enc.Utf8));  
 }
 
-
+// CIFRATURA CON CTR 
 var CipherTextxsCTR = [
   {
   C :'69dda8455c7dd4254bf353b773304eec0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329',
@@ -136,17 +136,19 @@ var CipherTextxsCTR = [
   C :'770b80259ec33beb2561358a9f2dc617e46218c0a53cbeca695ae45faa8952aa0e311bde9d4e01726d3184c34451',
   },
 ]
-
+// key
 var keyCTR = CryptoJS.enc.Hex.parse('36f18357be4dbd77f050515c73fcf9f2')
 
 for (let i = 0; i < CipherTextxsCTR.length; i++) {
-
+  // preso iv dal testo cifrato 
   var ivCTR = CipherTextxsCTR[i].C.substring(0, 32)
   ivCTR = CryptoJS.enc.Hex.parse(ivCTR)
+  // preso testo cifrato e trasformato in modo che si riesca ad usare nell'decoder di Crypto.js
   var encryptedCTR = CipherTextxsCTR[i].C.substring(32)
   var cipherParams = CryptoJS.lib.CipherParams.create({
     ciphertext:CryptoJS.enc.Hex.parse(encryptedCTR)
   })
+  // decifrato il messaggio (occhio al padding)
   var decryptCTR = CryptoJS.AES.decrypt(cipherParams, keyCTR, {
     iv: ivCTR,
     padding: CryptoJS.pad.NoPadding,
