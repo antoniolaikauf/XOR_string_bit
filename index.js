@@ -171,26 +171,26 @@ let blocco1=testo_cifrato.substring(32,64)
 let blocco2 = testo_cifrato.substring(64, 94)
 // console.log(blocco2);
 
-// let blocco3 = testo_cifrato.substring(96, 128)
-// const call = async() => {
-//  for (let i = 0; i < 256; i++) {
-//   blocco2 = testo_cifrato.substring(64, 94)
-//   let change = i.toString(16).padStart(2, '0');
+let blocco3 = testo_cifrato.substring(96, 128)
+const call = async() => {
+ for (let i = 0; i < 256; i++) {
+  blocco2 = testo_cifrato.substring(64, 94)
+  let change = i.toString(16).padStart(2, '0');
 
-//   blocco2 = blocco2 + change
-//   let chimata =blocco1+blocco2+blocco3
-//    try {
-//      const res = await axios.get('http://crypto-class.appspot.com/po?er='+chimata)
-//      if (res.status === 404) {
-//        console.log(`Byte che causa 404: ${i}`);
-//        console.log(res.data);
-//     }
-//    } catch (error) {
-//     // console.log(error);
-//    }
-//   }
-// }
-// call()
+  blocco2 = blocco2 + change
+  let chimata =blocco1+blocco2+blocco3
+   try {
+     const res = await axios.get('http://crypto-class.appspot.com/po?er='+chimata)
+     if (res.status === 404) {
+       console.log(`Byte che causa 404: ${i}`);
+       console.log(res.data);
+    }
+   } catch (error) {
+    // console.log(error);
+   }
+  }
+}
+call()
 
 
 // Estrazione del byte originale - l'ultimo byte del blocco che stai attaccando
