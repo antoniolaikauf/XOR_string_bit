@@ -159,16 +159,18 @@ for (let i = 0; i < CipherTextxsCTR.length; i++) {
 }
 
 
-// esercizio 3 attacco padding oracle 
+// esercizio 3 attacco padding oracle
 
 
 let testo_cifrato = 'b655328bfc7259b372828363c5f6af39de5997294f4cb7eb0fcad1cff664d300d913e5a88ba97eb190392ea82549c6a4d03a799d37b52f38381ad3bcf1259034'
-// console.log(testo_cifrato.length)
+// // console.log(testo_cifrato.length)
 
 let iv = testo_cifrato.substring(0, 32)
 iv = CryptoJS.enc.Hex.parse(iv)
 let blocco1=testo_cifrato.substring(32,64)
-// let blocco2 = testo_cifrato.substring(64, 94)
+let blocco2 = testo_cifrato.substring(64, 94)
+console.log(blocco2);
+
 let blocco3 = testo_cifrato.substring(96, 128)
 const call = async() => {
  for (let i = 0; i < 256; i++) {
@@ -189,6 +191,32 @@ const call = async() => {
   }
 }
 call()
+
+
+// Estrazione del byte originale - l'ultimo byte del blocco che stai attaccando
+let byteOriginaleHex = testo_cifrato.substring(94, 96);
+// si trasforma  il valore in numero , 16 sarebbe la radice e specifica quale base numeri usare 
+let byteOriginale = parseInt(byteOriginaleHex, 16);
+console.log(byteOriginale);
+
+// padding  corretto 176
+let numero_corretto = 176;
+let esadecimale_corretto = numero_corretto.toString(16); // 'b0'
+// si trasforma  il valore in numero , 16 sarebbe la radice e specifica quale base numeri usare
+let byteModificato = parseInt(esadecimale_corretto, 16);
+
+// Il valore del padding che stai cercando di ottenere ultimo byte 
+let paddingValue = 0x01;
+
+// Calcolo del plaintext, per fare la xor in js i valori devono essere numeri 
+let plaintextByte = byteModificato ^ byteOriginale ^ paddingValue;
+// valore esadecimale che rappresenta l'ultimo byte del blocco 2 
+console.log(plaintextByte.toString(16));
+
+
+
+
+
 
 
 
