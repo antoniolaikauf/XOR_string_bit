@@ -163,26 +163,33 @@ for (let i = 0; i < CipherTextxsCTR.length; i++) {
 
 
 let testo_cifrato = 'b655328bfc7259b372828363c5f6af39de5997294f4cb7eb0fcad1cff664d300d913e5a88ba97eb190392ea82549c6a4d03a799d37b52f38381ad3bcf1259034'
+// console.log(testo_cifrato.length)
 
 let iv = testo_cifrato.substring(0, 32)
-iv =CryptoJS.enc.Hex.parse(iv)
-let messaggio_pad = testo_cifrato.substring(32)
-// let params = CryptoJS.lib.CipherParams.create({
-//   ciphertext:CryptoJS.enc.Hex.parse(messaggio_pad)
-// })
-
-console.log(messaggio_pad.toString(2));
-
-
-
+iv = CryptoJS.enc.Hex.parse(iv)
+let blocco1=testo_cifrato.substring(32,64)
+// let blocco2 = testo_cifrato.substring(64, 94)
+let blocco3 = testo_cifrato.substring(96, 128)
 const call = async() => {
- try {
-   const res = await axios.get('http://crypto-class.appspot.com/po?er='+messaggio_pad)
-   let data = res.data
-   return data 
- } catch (error) {
-  console.log(error);
- }
+ for (let i = 0; i < 256; i++) {
+  blocco2 = testo_cifrato.substring(64, 94)
+  let change = i.toString(16).padStart(2, '0');
+
+  blocco2 = blocco2 + change
+  let chimata =blocco1+blocco2+blocco3
+   try {
+     const res = await axios.get('http://crypto-class.appspot.com/po?er='+chimata)
+     if (res.status === 404) {
+       console.log(`Byte che causa 404: ${i}`);
+       console.log(res.data);
+    }
+   } catch (error) {
+    // console.log(error);
+   }
+  }
 }
-console.log(call());
+call()
+
+
+
 
