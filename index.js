@@ -169,49 +169,58 @@ let iv = testo_cifrato.substring(0, 32)
 iv = CryptoJS.enc.Hex.parse(iv)
 let blocco1=testo_cifrato.substring(32,64)
 let blocco2 = testo_cifrato.substring(64, 94)
-console.log(blocco2);
+// console.log(blocco2);
 
-let blocco3 = testo_cifrato.substring(96, 128)
-const call = async() => {
- for (let i = 0; i < 256; i++) {
-  blocco2 = testo_cifrato.substring(64, 94)
-  let change = i.toString(16).padStart(2, '0');
+// let blocco3 = testo_cifrato.substring(96, 128)
+// const call = async() => {
+//  for (let i = 0; i < 256; i++) {
+//   blocco2 = testo_cifrato.substring(64, 94)
+//   let change = i.toString(16).padStart(2, '0');
 
-  blocco2 = blocco2 + change
-  let chimata =blocco1+blocco2+blocco3
-   try {
-     const res = await axios.get('http://crypto-class.appspot.com/po?er='+chimata)
-     if (res.status === 404) {
-       console.log(`Byte che causa 404: ${i}`);
-       console.log(res.data);
-    }
-   } catch (error) {
-    // console.log(error);
-   }
-  }
-}
-call()
+//   blocco2 = blocco2 + change
+//   let chimata =blocco1+blocco2+blocco3
+//    try {
+//      const res = await axios.get('http://crypto-class.appspot.com/po?er='+chimata)
+//      if (res.status === 404) {
+//        console.log(`Byte che causa 404: ${i}`);
+//        console.log(res.data);
+//     }
+//    } catch (error) {
+//     // console.log(error);
+//    }
+//   }
+// }
+// call()
 
 
-// Estrazione del byte originale - l'ultimo byte del blocco che stai attaccando
-let byteOriginaleHex = testo_cifrato.substring(94, 96);
-// si trasforma  il valore in numero , 16 sarebbe la radice e specifica quale base numeri usare 
-let byteOriginale = parseInt(byteOriginaleHex, 16);
-console.log(byteOriginale);
+// // Estrazione del byte originale - l'ultimo byte del blocco che stai attaccando
+// let byteOriginaleHex = testo_cifrato.substring(94, 96);
+// // si trasforma  il valore in numero , 16 sarebbe la radice e specifica quale base numeri usare 
+// let byteOriginale = parseInt(byteOriginaleHex, 16);
+// console.log(byteOriginale);
 
-// padding  corretto 176
-let numero_corretto = 176;
-let esadecimale_corretto = numero_corretto.toString(16); // 'b0'
-// si trasforma  il valore in numero , 16 sarebbe la radice e specifica quale base numeri usare
-let byteModificato = parseInt(esadecimale_corretto, 16);
+// // padding  corretto 176
+// let numero_corretto = 176;
+// let esadecimale_corretto = numero_corretto.toString(16); // 'b0'
+// // si trasforma  il valore in numero , 16 sarebbe la radice e specifica quale base numeri usare
+// let byteModificato = parseInt(esadecimale_corretto, 16);
 
-// Il valore del padding che stai cercando di ottenere ultimo byte 
-let paddingValue = 0x01;
+// // Il valore del padding che stai cercando di ottenere ultimo byte 
+// let paddingValue = 0x01;
 
-// Calcolo del plaintext, per fare la xor in js i valori devono essere numeri 
-let plaintextByte = byteModificato ^ byteOriginale ^ paddingValue;
-// valore esadecimale che rappresenta l'ultimo byte del blocco 2 
-console.log(plaintextByte.toString(16));
+// // Calcolo del plaintext, per fare la xor in js i valori devono essere numeri 
+// let plaintextByte = byteModificato ^ byteOriginale ^ paddingValue;
+// // valore esadecimale che rappresenta l'ultimo byte del blocco 2 
+// console.log(plaintextByte.toString(16));
+let lunghezza_blocco = 30 
+for (let i = lunghezza_blocco; i >= 0; i -= 2) {
+  let byteOriginaleHex = blocco2.substring(i, i + 2)
+  console.log(byteOriginaleHex);
+  let byteOriginale = parseInt(byteOriginaleHex, 16)
+  
+
+  // console.log(i);
+} 
 
 
 
