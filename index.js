@@ -157,3 +157,32 @@ for (let i = 0; i < CipherTextxsCTR.length; i++) {
   
   console.log(decryptCTR.toString(CryptoJS.enc.Utf8));
 }
+
+
+// esercizio 3 attacco padding oracle 
+
+
+let testo_cifrato = 'b655328bfc7259b372828363c5f6af39de5997294f4cb7eb0fcad1cff664d300d913e5a88ba97eb190392ea82549c6a4d03a799d37b52f38381ad3bcf1259034'
+
+let iv = testo_cifrato.substring(0, 32)
+iv =CryptoJS.enc.Hex.parse(iv)
+let messaggio_pad = testo_cifrato.substring(32)
+// let params = CryptoJS.lib.CipherParams.create({
+//   ciphertext:CryptoJS.enc.Hex.parse(messaggio_pad)
+// })
+
+console.log(messaggio_pad.toString(2));
+
+
+
+const call = async() => {
+ try {
+   const res = await axios.get('http://crypto-class.appspot.com/po?er='+messaggio_pad)
+   let data = res.data
+   return data 
+ } catch (error) {
+  console.log(error);
+ }
+}
+console.log(call());
+
